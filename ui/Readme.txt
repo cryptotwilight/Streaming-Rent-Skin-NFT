@@ -1,6 +1,7 @@
-Thanks for downloading this template!
+This is the SRS NFT ui. 
+
 
 Template Name: PhotoFolio
 Template URL: https://bootstrapmade.com/photofolio-bootstrap-photography-website-template/
-Author: BootstrapMade.com
+Template Author: BootstrapMade.com
 License: https://bootstrapmade.com/license/
