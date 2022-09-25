@@ -1,0 +1,117 @@
+iSkinnableAbi = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_lockToNftId",
+				"type": "uint256"
+			}
+		],
+		"name": "getFunctionalTokenURI",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_uri",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_nftContractAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nftId",
+				"type": "uint256"
+			}
+		],
+		"name": "isLocked",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_locked",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_nftId",
+				"type": "uint256"
+			}
+		],
+		"name": "isLocked",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_locked",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_nftContractAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nftId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lockToNftId",
+				"type": "uint256"
+			}
+		],
+		"name": "lock",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_locked",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_nftContractAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nftId",
+				"type": "uint256"
+			}
+		],
+		"name": "unlock",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_locked",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
