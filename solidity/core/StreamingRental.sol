@@ -3,10 +3,10 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/561d0eead30d3977847f2c2b4ae54eac31c218df/contracts/token/ERC721/IERC721.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5e8e8bb9f0c6c5e1a8d3a38bcedd7861906f692b/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
-import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
+import {ISuperfluid, ISuperToken, ISuperApp, ISuperTokenFactory} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol"; 
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol";
 
@@ -25,6 +25,7 @@ contract StreamingRental is IStreamingRental {
 
     ISuperToken superfluidToken; 
     ISuperfluid host; 
+
 
     RentalListing listing; 
     uint256 startDate; 
@@ -139,8 +140,26 @@ contract StreamingRental is IStreamingRental {
 
 
     function getSuperfluidToken(address _erc20) view internal returns (address _superfluidToken) {
+        ISuperTokenFactory tokenFactory_ = host.getSuperTokenFactory();
+    
+        IERC20 underlyingToken_ = IERC20(_erc20);
+        IERC20Metadata metadata_ = IERC20Metadata(_erc20); 
+        uint8 underlyingDecimals_ = metadata_.decimals();
+        string calldata name_ = concat(metadata_.name(), "x"); 
+        string calldata symbol_ = concat(metadata_.symbol(), "x");
 
+        ISuperToken superToken_ = tokenFactory_.createERC20Wrapper( underlyingToken_,
+                                                                    underlyingDecimals_,
+                                                                    ISuperTokenFactory.Upgradability.NON_UPGRADABLE,
+                                                                    name_, 
+                                                                    symbol_);
 
+        return address(superToken_);
+
+    }
+
+    function concat(string memory a, string memory b) pure internal returns (string calldata) {
+         return string(abi.encodePacked(a, b));  
     }
 
     
