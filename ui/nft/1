@@ -2,7 +2,7 @@
   "name": "SRS Test 1",
   "description": "This should be an Open Sea friendly NFT",
   "image": "https://wandering-forest-2153.on.fleek.co/nft/1.jpg",
-  "external_link" : https://www.blockstarlogic.com
+  "external_link" : "https://www.blockstarlogic.com",
   "traits" : [
 			{
 				"trait_type" : "Beauty",
