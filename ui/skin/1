@@ -1,0 +1,16 @@
+{
+  "name": "SRS Test 2 Skin",
+  "description": "This should be an Open Sea friendly NFT Skin",
+  "image": "https://wandering-forest-2153.on.fleek.co/nft/2.jpg",
+  "external_link" : https://www.blockstarlogic.com
+  "traits" : [
+			{
+				"trait_type" : "Beauty",
+				"value" : 3
+			},
+			{
+				"trait_type" : "Hair",
+				"value" : 2
+			}
+		]	
+}
