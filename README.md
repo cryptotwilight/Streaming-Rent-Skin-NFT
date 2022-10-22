@@ -30,6 +30,8 @@ SRS NFT is currently deployed on the Goerli EVM Testnet. The relevant contract a
 |SuperTokenRegistry         |0x07101Fc3e9770419730d4e7557e3948FabFe5501|
 |OpenRegister               |0x08C5727dD1162a3Ed6E03e81fB25202E6Ded6faD|
 |Test Skinnable             |0x72966b1B43573dd5A6A6F4B19178E2733CF0091e|
+|Test Payment fUSDC         |0xc94dd466416A7dFE166aB2cF916D3875C049EBB7| 
+
 
 ### UI Deployment 
 The Experimental SRS NFT User Interface can be found here:
