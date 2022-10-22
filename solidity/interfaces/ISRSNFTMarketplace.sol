@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity >=0.8.0 <0.9.0;
 
 struct RentalListing {
     uint256 id; 
@@ -18,7 +18,7 @@ interface ISRSNFTMarketplace {
 
     function getRentals() view external returns (address [] memory _rentalContracts);
 
-    function rent(uint256 _listingId, address _skinnableNFT, uint256 _localTokenId) payable external returns (address _rentalContract);
+    function createRentalAgreement(uint256 _listingId, address _skinnableNFT, uint256 _localTokenId) external returns (address _rentalContract);
 
     function postListing(address _nftContractAddress, 
                         uint256 _nftId, 
