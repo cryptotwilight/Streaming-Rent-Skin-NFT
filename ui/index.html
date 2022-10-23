@@ -97,22 +97,36 @@
                             <td><input id="nft_id" type="text" placeholder=" enter id of your NFT " class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>Rental Fee (USDC) </td>
-                            <td><input id="rental_fee" type="text" placeholder="enter rental fee in USDC " class="form-control"></td>
-                            <td>Rental Period (DAYS) </td>
-                            <td><input id="rental_period" type="text" placeholder=" enter rental period in whole days " class="form-control"></td>
+                            <td>Rental Fee</td>
+                            <td><input id="rental_fee" type="text" placeholder="enter rental fee " class="form-control"></td>
+                            <td>Rental Period </td>
+                            <td><select class="form-control">
+                                    <option>0.25 days</option>
+                                    <option>0.5 days</option>
+                                    <option>1 days</option>
+                                    <option>3 days</option>
+                                    <option>5 days</option>
+                                    <option>7 days</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                            <td>NFT Contract</td>
-                            <td><input id="nft_contract" type="text" placeholder="0x..." class="form-control"></td>
-                            <td>NFT Id</td>
-                            <td><input id="nft_id" type="text" placeholder=" enter id of your NFT " class="form-control"></td>
+                            <td>Payment Currency</td>
+                            <td><select class="form-control">
+                                <option style="background-image:url(assets/img/android-icon-36x36.png);">USDC</option>
+                                <option><img src="assets/img/android-icon-36x36.png">USDT</option>
+                                <option><img src="assets/img/android-icon-36x36.png">DAI</option>
+                                <option><img src="assets/img/android-icon-36x36.png">DefiDollar</option>
+                                <option><img src="assets/img/android-icon-36x36.png">Frax</option>
+                            </select></td>
+                            <td><button type="submit" id="list" class="btn btn-warning"><small>Approve</small></button></td>
+                            <td><button type="submit" id="list" class="btn btn-danger">List</button><button type="reset" id="clear" class="btn btn-primary">clear</button></td>
                         </tr>
                         <tr>
-                            <td><button type="reset" id="clear" class="btn btn-primary">clear</button></td>
                             <td></td>
-                            <td><button type="submit" id="list" class="btn btn-warning">Approve SRSNFT</button></td>
-                            <td><button type="submit" id="list" class="btn btn-danger">List</button></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </table>
 
