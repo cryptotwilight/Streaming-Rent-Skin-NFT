@@ -30,6 +30,12 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 
+    <!-- Web 3 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
     <!-- =======================================================
   * Template Name: PhotoFolio - v1.1.0
   * Template URL: https://bootstrapmade.com/photofolio-bootstrap-photography-website-template/
@@ -38,7 +44,7 @@
   ======================================================== -->
 </head>
 
-<body onload="generateMock()">
+<body>
 
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
@@ -56,7 +62,7 @@
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="#" id="connect_web_3">Connect Web3</a></li>
                 </ul>
-         
+
             </nav>
             <!-- .navbar -->
 
@@ -71,10 +77,10 @@
 
         </div>
         <div class="container">
-          <span id="metamask_logo"></span> <font color="white"><span id="show_wallet"></span></font> 
+            <span id="metamask_logo"></span> <span id="show_wallet"></span><span id="dashboard_span">&nbsp;<a href="dashboard.html">Dashboard</a></span>
         </div>
     </header>
-    
+
     <!-- End Header -->
 
     <!-- ======= Hero Section ======= -->
@@ -82,7 +88,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
-                    <h2>SRS NFT</h2>
+                    <h2>Streaming Rental Skinned NFT</h2>
                     Skin your NFT with exciting covers
                 </div>
             </div>
@@ -92,15 +98,15 @@
                     <table>
                         <tr>
                             <td>NFT Contract</td>
-                            <td><input id="nft_contract" type="text" placeholder="0x..." class="form-control"></td>
+                            <td><input id="nft_contract_listing_field" type="text" placeholder="0x..." class="form-control"></td>
                             <td>NFT Id</td>
-                            <td><input id="nft_id" type="text" placeholder=" enter id of your NFT " class="form-control"></td>
+                            <td><input id="nft_id_listing_field" type="text" placeholder=" enter id of your NFT " class="form-control"></td>
                         </tr>
                         <tr>
                             <td>Rental Fee</td>
-                            <td><input id="rental_fee" type="text" placeholder="enter rental fee " class="form-control"></td>
+                            <td><input id="rental_fee_listing_field" type="text" placeholder="enter rental fee " class="form-control"></td>
                             <td>Rental Period </td>
-                            <td><select class="form-control">
+                            <td><select id="rental_period_listing_select" class="form-control">
                                     <option>0.25 days</option>
                                     <option>0.5 days</option>
                                     <option>1 days</option>
@@ -112,21 +118,31 @@
                         </tr>
                         <tr>
                             <td>Payment Currency</td>
-                            <td><select class="form-control">
+                            <td><select id="payment_erc20_listing_select" class="form-control">
                                 <option style="background-image:url(assets/img/android-icon-36x36.png);">USDC</option>
-                                <option><img src="assets/img/android-icon-36x36.png">USDT</option>
-                                <option><img src="assets/img/android-icon-36x36.png">DAI</option>
-                                <option><img src="assets/img/android-icon-36x36.png">DefiDollar</option>
-                                <option><img src="assets/img/android-icon-36x36.png">Frax</option>
+                                <option>USDT</option>
+                                <option>DAI</option>
+                                <option>DefiDollar</option>
+                                <option>Frax</option>
                             </select></td>
-                            <td><button type="submit" id="list" class="btn btn-warning"><small>Approve</small></button></td>
-                            <td><button type="submit" id="list" class="btn btn-danger">List</button><button type="reset" id="clear" class="btn btn-primary">clear</button></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td colspan="4">
+                                <i class="bi bi-info-circle"></i>
+                                <button id="approve_srs_nft_button" type="submit" id="approve_nft_transfer_button" class="btn btn-warning"><small>Approve SRS NFT</small></button>
+                                <span id="instruction_arrow_span"><i class="bi bi-arrow-right"></i></span>
+                                <button type="submit" id="list_rental_button" class="btn btn-danger">List Your NFT</button>
+                                <!-- must be disabled until approved -->
+                                <button type="reset" id="clear_button" class="btn btn-primary">clear</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <span id="listing_message_span">${listing messages}</span>
+                            </td>
+
                         </tr>
                     </table>
 
@@ -160,7 +176,11 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <center><font color="black"><h2>Rent Skin</h2></font></center>
+            <center>
+                <font color="black">
+                    <h2>Rent Skin</h2>
+                </font>
+            </center>
             <table>
                 <tr>
                     <td><font color="black">Skinnable NFT Contract</font></td>
@@ -170,21 +190,25 @@
                     <td><font color="black">Skinnable NFT Id</font></td>
                     <td><input type="text" placeholder="enter id of NFT to be skinned " class="form-control"></td>
                 </tr>
-                <tr> 
-                  <td><font color="black">Price:</font></td>
-                  <td><font color="black"></font></td>
-                </tr>
-                <tr> 
-                  <td><font color="black">Currency:</font></td>
-                  <td><font color="black"></font></td>
-                </tr>
-                <tr> 
-                  <td><font color="black">Period:</font></td>
-                  <td><font color="black"></font></td>
+                <tr>
+                    <td><font color="black">Price:</font></td>
+                    <td><font color="black"></font></td>
                 </tr>
                 <tr>
-                    <td><button type="submit" id="approve_payment_erc20" class="btn btn-warning">Approve Payment Erc20</button></td>
-                    <td><button type="submit" id="rent_skin" class="btn btn-success">Rent Skin</button></td>
+                    <td><font color="black">Currency:</font></td>
+                    <td><font color="black"></font></td>
+                </tr>
+                <tr>
+                    <td><font color="black">Period:</font></td>
+                    <td><font color="black"></font></td>
+                </tr>
+                <tr>
+                    <td><button type="submit" id="approve_skin_application_button" class="btn btn-warning">Approve Skin Application</button></td>
+                    <td><button type="submit" id="approve_payment_erc20_button" class="btn btn-warning">Approve Payment Erc20</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit" id="rent_skin_button" class="btn btn-success">Rent Skin</button></td>
                 </tr>
             </table>
         </div>
@@ -226,31 +250,125 @@
     <script src="assets/js/main.js"></script>
 
     <!-- ABI-->
-    <script src="assets/js/connectWeb3.js"></script>
+    <script src="assets/js/abi/i_erc20_metadata_abi.js"></script>
+    <script src="assets/js/abi/i_erc721_metadata_abi.js"></script>
+    <script src="assets/js/abi/i_open_register_abi.js"></script>
+    <script src="assets/js/abi/i_skinnable_abi.js"></script>
+    <script src="assets/js/abi/i_streaming_rental_abi.js"></script>
+    <script src="assets/js/abi/i_srs_nft_marketplace_abi.js"></script>
+    <script src="assets/js/abi/i_super_token_registry_abi.js"></script>
+
+    <!-- WEB3 -->
+    <script src="assets/js/autoconnect.js"></script>
 
     <!-- Modal -->
     <script src="assets/js/modal.js"></script>
 
     <script>
-        const nftsAvailable = ge("nfts_available");
+        const nftsAvailable             = ge("nfts_available");
+        const nftContractListingField   = ge("nft_contract_listing_field");
+        const nftIdListingField         = ge("nft_id_listing_field");
+        const rentalFeeListingField     = ge("rental_fee_listing_field");
+        const rentalPeriodListingSelect = ge("rental_period_listing_select");
+        const paymentERC20ListingSelect = ge("payment_erc20_listing_select");
+        const approveNFTTransferButton  = ge("approve_nft_transfer_button");
+        const listRentalButton          = ge("list_rental_button");
+        listRentalButton.setAttribute("onclick", "listSkin()");
+        
+        const clearButton               = ge("clear_button");
+        const listingMessageSpan        = ge("listing_message_span");
 
-        function loadMarketPlace() {
+        const approveSkinApplicationButton  = ge("approve_skin_application_button");
+        const approvePaymentERC20Button     = ge("approve_payment_erc20_button");
+
+        const rentSkinButton                = ge("rent_skin_button");
+
+        const iOpenRegisterAddress = "0x08C5727dD1162a3Ed6E03e81fB25202E6Ded6faD";
+        
+        var iOpenRegisterContract; 
+        var iSuperTokenRegisterContract; 
+        
+        var SRSMarketplaceAddress; 
+        var iSRSNFTMarketplaceContract; 
+
+
+        async function configureCoreContracts() {
+            // Register 
+            iOpenRegisterContract = getContract(iOpenRegisterAbi, iOpenRegisterAddress);
+            // Token Registry 
+            iOpenRegisterContract.methods.getAddress("RESERVED_SUPER_TOKEN_REGISTRY").call({from : account})
+            .then(function(response){
+                console.log(response);
+                iSuperTokenRegisterContract = getContract(iSuperTokenRegistry, response);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
             
-
+            // Market place
+            iOpenRegisterContract.methods.getAddress("RESERVED_SRS_NFT_MARKET_PLACE").call({from : account})
+            .then(function(response){
+                console.log(response);
+                SRSMarketplaceAddress = response; 
+                iSRSNFTMarketplaceContract = getContract(iSRSNFTMarketplaceAbi, SRSMarketplaceAddress);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
         }
 
+        function loadPageData() { 
+            loadMarketPlace(); 
+        }
 
-        function generateMock() {
-            var stem = "assets/img/gallery/gallery-";
-            var suffix = ".jpg";
+        function loadMarketPlace() {
+            nftsAvailable.innerHTML = ""; 
+            iSRSNFTMarketplaceContract.methods.getListings().call({ from : account})
+            .then(function(response){
+                console.log(response);
+                var listings = response; 
+                for(var x = 0; x < listings.length; x++){
+                    var listing = listings[x];
+                    console.log(listing);
+                    loadNFT(listing);
+                }
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        }
 
-            var titleStem = "Gallery ";
-            for (var x = 1; x < 16; x++) {
-                var imgSrc = stem + x + suffix;
-                var title = titleStem + x;
-                buildGalleryItem(imgSrc, title, 16, "USDC", 1)
-            }
+        function loadNFT(listing) {                                                
+            var erc20 = getContract(iERC20MetadataAbi, listing.paymentErc20);
+            erc20.methods.symbol().call({from : account})
+            .then(function(response){
+                console.log(response);
+                var currency = response; 
+                startGalleryBuild(listing, currency);
+            })
+            .catch(function(err){
+                console.log(err);
+            });                       
+        }
 
+        function startGalleryBuild(listing, currency) {
+            var erc721 = getContract(iERC721Abi, listing.nftContract);            
+            erc721.methods.getTokenURI(listing.nftId).call({from : account})
+            .then(function(response){
+                console.log(response);
+                fetch(getTokenURI)
+                .then(function(response){
+                    console.log(response);
+                    var json = JSON.parse(response);                               
+                    buildGalleryItem(json.image, json.name, listing.rentalFee, currency, listing.period);
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            })
+            .catch(function(err){
+                console.log(err);
+            });
         }
 
         function buildGalleryItem(imgSrc, imgTitle, price, currency, period) {
@@ -293,18 +411,18 @@
             modalLink.setAttribute("class", "details-link");
 
             modalLink.onclick = function() {
-                                            modal.style.display = "block";
-                                          }
+                modal.style.display = "block";
+            }
             var span = document.getElementsByClassName("close")[0];
             span.onclick = function() {
-                                        modal.style.display = "none";
-                                      }
+                modal.style.display = "none";
+            }
 
             window.onclick = function(event) {
-                                                if (event.target == modal) {
-                                                  modal.style.display = "none";
-                                                }
-                                              }
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
             var skinIcon = ce("i");
             skinIcon.setAttribute("class", "bi bi-back");
             modalLink.append(skinIcon);
@@ -317,6 +435,47 @@
 
             nftsAvailable.append(d);
 
+        }
+
+        function approveNFTToRentalContractTransfer() {
+            var iERC721 = getContract(iERC721MetadataAbi, )
+        }
+
+        function listSkin() {
+            listingMessageSpan.innerHTML = ""; 
+            iSRSNFTMarketplaceContract.methods.postListing(nftContractListingField.value, 
+                                                           nftIdListingField.value, 
+                                                           rentalFeeListingField.value, 
+                                                           rentalPeriodListingSelect.value, 
+                                                           paymentERC20ListingSelect.value).send({from : account})
+            .then(function(response){
+                console.log(response);
+                listingMessageSpan.innerHTML = response; 
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        }
+
+        function approveRentalPayment(paymentErc20Address, rentalFee) {
+            iERC20 = getContract(iERC20MetadataAbi, paymentErc20Address);
+            iERC20.methods.approve(SRSMarketplaceAddress, rentalFee ).send({from : account})
+            .then(function(response){
+                console.log(response);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        }
+
+        function approveSkinApplication() { 
+            
+        }
+
+        
+
+        function getContract(abi, address){
+            return new web3.eth.Contract(abi, address);
         }
 
         function ge(name) {

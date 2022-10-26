@@ -1,4 +1,33 @@
-iSRSNFTMarketPlaceAbi = [
+iSRSNFTMarketplaceAbi = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_listingId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_skinnableNFT",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_localTokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "createRentalAgreement",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "_rentalContract",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"inputs": [],
 		"name": "getListings",
@@ -99,35 +128,6 @@ iSRSNFTMarketPlaceAbi = [
 			}
 		],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_listingId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_skinnableNFT",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_localTokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "rent",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "_rentalContract",
-				"type": "address"
-			}
-		],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{

@@ -1,20 +1,4 @@
-ERC721Abi = [
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "name_",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "symbol_",
-				"type": "string"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
+iERC721MetadataAbi = [
 	{
 		"anonymous": false,
 		"inputs": [
@@ -120,7 +104,7 @@ ERC721Abi = [
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "balance",
 				"type": "uint256"
 			}
 		],
@@ -139,7 +123,7 @@ ERC721Abi = [
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "operator",
 				"type": "address"
 			}
 		],
@@ -195,7 +179,7 @@ ERC721Abi = [
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "owner",
 				"type": "address"
 			}
 		],
@@ -262,7 +246,7 @@ ERC721Abi = [
 			},
 			{
 				"internalType": "bool",
-				"name": "approved",
+				"name": "_approved",
 				"type": "bool"
 			}
 		],
