@@ -357,28 +357,36 @@
             .then(function(response){
                 console.log(response);
                 var tokenURI = response;
-                fetch(tokenURI)
-                .then(function(response){
-                    console.log(response);
-                    response.json()                               
-                    .then(function(response){
-                        console.log(response);
-                        var json = response; 
-                        buildGalleryItem(json.image, json.name, listing.rentalFee, currency, listing.period);
-                    })
-                    .catch(function(err){
-                        console.log(err);
-                    });
-                    
-                })
-                .catch(function(err){
-                    console.log(err);
-                });
+                fetchAndBuild(tokenURI, listing, currency);
             })
             .catch(function(err){
                 console.log(err);
             });
         }
+
+        function fetchAndBuild(tokenURI, listing, currency){
+            fetch(tokenURI)
+            .then(function(response){
+                console.log(response);
+                build(response, tokenURI, listing, currency);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        }
+    
+        function build(response, tokenURI, listing, currency) {
+            response.json()                               
+            .then(function(response){
+                console.log(response);
+                var json = response; 
+                buildGalleryItem(json.image, json.name, listing.rentalFee, currency, listing.period);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
+        }
+
 
         function buildGalleryItem(imgSrc, imgTitle, price, currency, period) {
             /*<div class="col-xl-3 col-lg-4 col-md-6">
