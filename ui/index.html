@@ -275,8 +275,8 @@
         const listRentalButton          = ge("list_rental_button");
         listRentalButton.setAttribute("onclick", "listSkin()");
         
-        const clearButton               = ge("clear_button");
-        const listingMessageSpan        = ge("listing_message_span");
+        const clearButton                   = ge("clear_button");
+    const listingMessageSpan                = ge("listing_message_span");
 
         const approveSkinApplicationButton  = ge("approve_skin_application_button");
         const approvePaymentERC20Button     = ge("approve_payment_erc20_button");
@@ -352,15 +352,24 @@
         }
 
         function startGalleryBuild(listing, currency) {
-            var erc721 = getContract(iERC721Abi, listing.nftContract);            
-            erc721.methods.getTokenURI(listing.nftId).call({from : account})
+            var erc721 = getContract(iERC721MetadataAbi, listing.nftContract);            
+            erc721.methods.tokenURI(listing.nftId).call({from : account})
             .then(function(response){
                 console.log(response);
-                fetch(getTokenURI)
+                var tokenURI = response;
+                fetch(tokenURI)
                 .then(function(response){
                     console.log(response);
-                    var json = JSON.parse(response);                               
-                    buildGalleryItem(json.image, json.name, listing.rentalFee, currency, listing.period);
+                    response.json()                               
+                    .then(function(response){
+                        console.log(response);
+                        var json = response; 
+                        buildGalleryItem(json.image, json.name, listing.rentalFee, currency, listing.period);
+                    })
+                    .catch(function(err){
+                        console.log(err);
+                    });
+                    
                 })
                 .catch(function(err){
                     console.log(err);
@@ -437,8 +446,8 @@
 
         }
 
-        function approveNFTToRentalContractTransfer() {
-            var iERC721 = getContract(iERC721MetadataAbi, )
+        function approveNFTToRentalContractTransfer(rentalContractAddress) {
+            var iERC721 = getContract(iERC721MetadataAbi, rentalContractAddress );
         }
 
         function listSkin() {

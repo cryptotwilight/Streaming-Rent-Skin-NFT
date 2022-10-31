@@ -1,16 +1,16 @@
 {
-  "name": "SRS Test Skin 1",
+  "name": "SRS Test Skin 14",
   "description": "This is an Open Sea friendly NFT to be used as a Skin",
-  "image": "https://wandering-forest-2153.on.fleek.co/nft/1.jpg",
+  "image": "https://wandering-forest-2153.on.fleek.co/nft/14.jpg",
   "external_link" : "https://www.blockstarlogic.com",
   "traits" : [
 			{
 				"trait_type" : "Fire",
-				"value" : 3
+				"value" : 8
 			},
 			{
 				"trait_type" : "Ice",
-				"value" : 2
+				"value" : 7
 			}
 		]	
 }
